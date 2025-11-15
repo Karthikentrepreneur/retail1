@@ -1,0 +1,36 @@
+name: Backend CI
+
+on:
+  push:
+    paths:
+      - 'backend/**'
+  pull_request:
+    paths:
+      - 'backend/**'
+
+jobs:
+  lint-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install Poetry
+        run: pip install poetry
+      - name: Install dependencies
+        working-directory: backend
+        run: poetry install
+      - name: Lint
+        working-directory: backend
+        run: poetry run ruff check .
+      - name: Tests
+        working-directory: backend
+        run: poetry run pytest --maxfail=1 --disable-warnings
+      - name: Build image
+        run: |
+          docker build -f backend/Dockerfile -t pos-backend:${{ github.sha }} .
+      - name: Trivy scan
+        uses: aquasecurity/trivy-action@0.13.1
+        with:
+          image-ref: pos-backend:${{ github.sha }}
