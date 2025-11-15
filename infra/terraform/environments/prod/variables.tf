@@ -1,5 +1,6 @@
 variable "project_id" {
-  type = string
+  type    = string
+  default = "pos-prod"
 }
 
 variable "region" {
@@ -10,10 +11,12 @@ variable "region" {
 variable "database_password" {
   type      = string
   sensitive = true
+  default   = "prod-password"
 }
 
 variable "api_image" {
-  type = string
+  type    = string
+  default = "gcr.io/example-project/pos-api:prod"
 }
 
 variable "run_service_account" {

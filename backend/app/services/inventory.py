@@ -19,7 +19,7 @@ async def get_stock_balances(tenant_id: uuid.UUID, warehouse_id: uuid.UUID | Non
 
 
 async def record_transfer(tenant_id: uuid.UUID, payload: inventory_schema.InventoryTransferRequest) -> None:
-    async with get_async_session(str(tenant_id)) as session:
+    async with get_async_session(str(tenant_id)) as _session:
         # Placeholder: implement stock deduction/addition and ledger entries
         pass
 

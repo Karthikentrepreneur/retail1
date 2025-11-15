@@ -5,7 +5,7 @@ import uuid
 from sqlalchemy import select
 
 from app.db.session import get_async_session
-from app.models import Payment, Sale, SaleItem
+from app.models import Sale, SaleItem
 from app.schemas import sales as sales_schema
 
 

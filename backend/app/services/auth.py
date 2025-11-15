@@ -6,7 +6,7 @@ import uuid
 from fastapi import HTTPException, status
 from sqlalchemy import select
 
-from app.core.security import create_access_token, get_password_hash, verify_password
+from app.core.security import create_access_token, verify_password
 from app.db.session import get_async_session
 from app.models import Store, Tenant, User, UserRole
 

@@ -2,8 +2,6 @@ from __future__ import annotations
 
 import asyncio
 
-import httpx
-
 from app.services import gst as gst_service
 
 
@@ -15,7 +13,7 @@ async def process_gst_queue(message: dict) -> None:
 
 async def main(messages: list[dict]) -> None:
     for message in messages:
-      await process_gst_queue(message)
+        await process_gst_queue(message)
 
 
 if __name__ == "__main__":

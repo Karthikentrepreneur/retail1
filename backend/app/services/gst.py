@@ -2,10 +2,8 @@ from __future__ import annotations
 
 import uuid
 
-from sqlalchemy import select
-
 from app.db.session import get_async_session
-from app.models import GSTDocument, Sale
+from app.models import GSTDocument
 from app.schemas import gst as gst_schema
 
 
