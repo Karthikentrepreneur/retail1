@@ -1,10 +1,9 @@
 from __future__ import annotations
+from contextlib import asynccontextmanager, contextmanager
 
-from contextlib import asynccontextmanager
-
+from sqlalchemy import event, text
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
-from sqlalchemy.orm import Session, sessionmaker
-from sqlalchemy import event
+from sqlalchemy.orm import sessionmaker
 
 from app.core.config import settings
 
@@ -20,22 +19,25 @@ SYNC_SESSION_FACTORY = sessionmaker(bind=SYNC_ENGINE.sync_engine, autocommit=Fal
 async def get_async_session(tenant_id: str | None = None):
     async with ASYNC_SESSION_FACTORY() as session:
         if tenant_id:
-            await session.execute(f"SELECT set_config('app.current_tenant', '{tenant_id}', true)")
+            await session.execute(
+                text("SELECT set_config('app.current_tenant', :tenant_id, true)"),
+                {"tenant_id": tenant_id},
+            )
         try:
             yield session
         finally:
-            await session.execute("SELECT set_config('app.current_tenant', '', true)")
+            await session.execute(text("SELECT set_config('app.current_tenant', '', true)"))
 
 
-@asynccontextmanager
+@contextmanager
 def get_sync_session(tenant_id: str | None = None):
     with SYNC_SESSION_FACTORY() as session:  # type: ignore[arg-type]
         if tenant_id:
-            session.execute("SELECT set_config('app.current_tenant', :tenant, true)", {"tenant": tenant_id})
+            session.execute(text("SELECT set_config('app.current_tenant', :tenant, true)"), {"tenant": tenant_id})
         try:
             yield session
         finally:
-            session.execute("SELECT set_config('app.current_tenant', '', true)")
+            session.execute(text("SELECT set_config('app.current_tenant', '', true)"))
 
 
 @event.listens_for(ASYNC_SESSION_FACTORY, "after_begin")

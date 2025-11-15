@@ -3,10 +3,13 @@ from __future__ import annotations
 from functools import lru_cache
 from typing import List
 
-from pydantic import AnyHttpUrl, BaseSettings, Field
+from pydantic import AnyHttpUrl, Field
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
+    model_config = SettingsConfigDict(env_file=".env", env_prefix="POS_", case_sensitive=False)
+
     environment: str = Field(default="dev")
     api_prefix: str = Field(default="/api")
     secret_key: str = Field(default="change-me")
@@ -28,12 +31,6 @@ class Settings(BaseSettings):
     gsp_api_secret: str | None = None
 
     log_level: str = Field(default="INFO")
-
-    class Config:
-        env_file = ".env"
-        env_prefix = "POS_"
-        case_sensitive = False
-
 
 @lru_cache
 def get_settings() -> Settings:

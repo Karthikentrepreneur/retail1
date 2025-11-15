@@ -1,7 +1,6 @@
 from __future__ import annotations
 
-import datetime as dt
-from typing import Optional
+from datetime import datetime
 
 from pydantic import BaseModel, EmailStr, Field
 
@@ -24,8 +23,8 @@ class MFARequest(BaseModel):
 
 class MFAResponse(BaseModel):
     success: bool
-    challenge_id: Optional[str] = None
-    expires_at: Optional[dt.datetime] = None
+    challenge_id: str | None = None
+    expires_at: datetime | None = None
 
 
 class UserOut(BaseModel):
@@ -43,4 +42,4 @@ class LoginAudit(BaseModel):
     success: bool
     ip_address: str | None = None
     user_agent: str | None = None
-    timestamp: dt.datetime = Field(default_factory=dt.datetime.utcnow)
+    timestamp: datetime = Field(default_factory=datetime.utcnow)

@@ -5,14 +5,14 @@ from contextlib import asynccontextmanager
 
 from fastapi import Depends, FastAPI, Request
 from fastapi.responses import JSONResponse
+from starlette.middleware import Middleware
 from starlette.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
-from starlette.middleware import Middleware
 
+from app.api.dependencies import tenant_context
+from app.api.routes import auth, gst, inventory, payments, products, reports, sales, sync, tenants
 from app.core.config import settings
 from app.core.logging import configure_logging
-from app.api.routes import auth, tenants, products, inventory, sales, payments, gst, reports, sync
-from app.api.dependencies import tenant_context
 
 
 logger = logging.getLogger(__name__)

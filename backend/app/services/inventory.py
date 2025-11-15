@@ -5,7 +5,7 @@ import uuid
 from sqlalchemy import select
 
 from app.db.session import get_async_session
-from app.models import InventoryBalance, StockLedger, Warehouse
+from app.models import InventoryBalance, StockLedger
 from app.schemas import inventory as inventory_schema
 
 

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import uuid
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter
 
 from app.schemas import tenant as tenant_schema
 from app.services import tenant as tenant_service
