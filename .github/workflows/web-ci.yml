@@ -1,0 +1,27 @@
+name: Web CI
+
+on:
+  push:
+    paths:
+      - 'web/**'
+  pull_request:
+    paths:
+      - 'web/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        working-directory: web
+        run: npm install
+      - name: Lint
+        working-directory: web
+        run: npm run lint -- --no-cache
+      - name: Build
+        working-directory: web
+        run: npm run build
