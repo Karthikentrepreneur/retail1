@@ -11,9 +11,9 @@ variable "image" {
 }
 
 variable "service_account" {
-  type = string
+  type        = string
   description = "Existing service account email for Cloud Run. Leave empty to create one."
-  default = ""
+  default     = ""
 }
 
 variable "vpc_connector" {
@@ -21,11 +21,11 @@ variable "vpc_connector" {
 }
 
 variable "database_url" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "redis_url" {
-  type = string
+  type    = string
   default = ""
 }
