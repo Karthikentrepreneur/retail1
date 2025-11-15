@@ -11,15 +11,13 @@ variable "image" {
 }
 
 variable "service_account" {
-  type = string
+  type        = string
+  description = "Existing service account email for Cloud Run. Leave empty to create one."
+  default     = ""
 }
 
 variable "vpc_connector" {
   type = string
-}
-
-variable "allowed_cidr_blocks" {
-  type = list(string)
 }
 
 variable "database_url" {

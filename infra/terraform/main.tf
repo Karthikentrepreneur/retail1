@@ -32,7 +32,7 @@ module "redis" {
   source     = "./modules/redis"
   project_id = var.project_id
   region     = var.region
-  network    = module.network.network_name
+  network    = module.network.network_self_link
 }
 
 module "cloud_run" {
@@ -42,7 +42,6 @@ module "cloud_run" {
   vpc_connector       = module.network.vpc_connector
   image               = var.api_image
   service_account     = var.run_service_account
-  allowed_cidr_blocks = var.allowed_cidr_blocks
 }
 
 module "pubsub" {

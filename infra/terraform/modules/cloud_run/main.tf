@@ -1,6 +1,11 @@
 resource "google_service_account" "run" {
+  count        = var.service_account == "" ? 1 : 0
   account_id   = "pos-api-sa"
   display_name = "POS API Service Account"
+}
+
+locals {
+  service_account_email = var.service_account == "" ? google_service_account.run[0].email : var.service_account
 }
 
 resource "google_cloud_run_service" "api" {
@@ -9,7 +14,7 @@ resource "google_cloud_run_service" "api" {
 
   template {
     spec {
-      service_account_name = var.service_account
+      service_account_name = local.service_account_email
       containers {
         image = var.image
         env {

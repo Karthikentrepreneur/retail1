@@ -17,10 +17,7 @@ variable "api_image" {
 }
 
 variable "run_service_account" {
-  type = string
+  type    = string
+  default = ""
 }
 
-variable "allowed_cidr_blocks" {
-  type    = list(string)
-  default = []
-}

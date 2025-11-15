@@ -12,5 +12,4 @@ module "stack" {
   database_password    = var.database_password
   api_image            = var.api_image
   run_service_account  = var.run_service_account
-  allowed_cidr_blocks  = var.allowed_cidr_blocks
 }

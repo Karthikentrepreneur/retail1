@@ -19,7 +19,13 @@ def get_password_hash(password: str) -> str:
     return pwd_context.hash(password)
 
 
-def create_access_token(subject: str, tenant_id: str, store_id: str | None, roles: list[str], expires_minutes: int | None = None) -> str:
+def create_access_token(
+    subject: str,
+    tenant_id: str,
+    store_id: str | None,
+    roles: list[str],
+    expires_minutes: int | None = None,
+) -> str:
     expire = dt.datetime.utcnow() + dt.timedelta(minutes=expires_minutes or settings.access_token_expire_minutes)
     payload = {
         "sub": subject,
