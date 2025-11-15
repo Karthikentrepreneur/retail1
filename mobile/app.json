@@ -1,0 +1,22 @@
+{
+  "expo": {
+    "name": "POS Mobile",
+    "slug": "pos-mobile",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "pos",
+    "userInterfaceStyle": "light",
+    "android": {
+      "package": "com.example.posmobile",
+      "permissions": ["INTERNET"],
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "ios": {
+      "supportsTablet": false
+    }
+  }
+}

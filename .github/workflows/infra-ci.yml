@@ -1,0 +1,39 @@
+name: Terraform CI
+
+on:
+  push:
+    paths:
+      - 'infra/**'
+  pull_request:
+    paths:
+      - 'infra/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.5.7
+      - name: Terraform fmt
+        working-directory: infra/terraform
+        run: terraform fmt -check -recursive
+      - name: Terraform validate (dev)
+        working-directory: infra/terraform/environments/dev
+        run: terraform validate
+
+  plan-prod:
+    if: github.event_name == 'pull_request'
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.5.7
+      - name: Terraform plan (prod)
+        working-directory: infra/terraform/environments/prod
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
+        run: terraform plan -input=false
